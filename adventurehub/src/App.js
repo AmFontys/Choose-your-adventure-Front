@@ -1,10 +1,11 @@
 import './App.css';
 import Appbar from './Components/Appbar';
-import Story from './Components/story';
 import Index from "./pages/index.js";
 import SearchStory from "./pages/SearchStory.js";
-import AddStory from "./pages/AddStory.js";
+import Login from "./pages/Login.js";
 import { Routes, Route } from "react-router-dom";
+import Dashboard from './pages/Dashboard';
+import ReadStory from './pages/ReadStory';
 
 function App() {
   return (
@@ -14,8 +15,10 @@ function App() {
           <Route path='/' element={<Index />} />
           <Route path='Home' element={<Index />} />
           <Route path='Search' element={<SearchStory />} />
-          <Route path='MakeStory' element={<AddStory />} />
           <Route path='' element={<Index />} />
+          <Route path='DashBoard' element={<Dashboard />} />
+          <Route path='Login' element={<Login />} />
+          <Route path='ReadStory' element={<ReadStory />} />
         </Routes>
       </div>
   );

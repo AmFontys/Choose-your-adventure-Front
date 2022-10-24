@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { Container } from '@mui/system';
-import Story from '../Components/story';
 
-export default function Index() {  
+export default function ReadStory(id) {  
  
   return (
     <Container>
-        
-    <h1>Index Stories</h1>
-    <Story />
+
+    <h1>Read Story</h1>
 
     </Container>
   );

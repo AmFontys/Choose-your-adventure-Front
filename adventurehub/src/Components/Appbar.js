@@ -16,8 +16,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 
 import {Link } from "react-router-dom";
 
-const pages = ['Home', 'Search', 'MakeStory'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Login'];
+const pages = ['Home', 'Search'];
+const settings = ['Dashboard', 'Login'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -155,7 +155,9 @@ const ResponsiveAppBar = () => {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center">
+                    <Link to={`/${setting}`}>{setting}</Link>
+                    </Typography>
                 </MenuItem>
               ))}
             </Menu>

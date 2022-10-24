@@ -4,13 +4,14 @@ import { Paper } from '@mui/material';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 
-export default function Story() {  
+export default function UserStory() {  
     const paperStyle ={padding:'50px 20px', width:600,margin:"20px auto"}
     const[stories,setStories]=useState([])
+    const cookie =1;
 
  
 useEffect(()=>{
- fetch("http://localhost:8080/api/story/")
+ fetch(`http://localhost:8080/api/story/User/${cookie}`)
  .then(res=>res.json())
  .then((result)=>{
    setStories(result);
@@ -20,7 +21,7 @@ useEffect(()=>{
   return (
     <Container>
      
-    <h1>Stories</h1>
+    <h1>Your stories</h1>
     <Paper elevation={3} style={paperStyle}>
 
       {stories.map(story=>(
