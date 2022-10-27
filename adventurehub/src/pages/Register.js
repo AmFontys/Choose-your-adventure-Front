@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -12,10 +10,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { getLogin } from '../Services/loginService';
+import { postRegister } from '../Services/loginService';
 import {useNavigate} from 'react-router-dom';
 
-import background from '../img/fantasyLandscape_img_800.png';
+import background from '../img/witch_img_800.png';
 
 function Copyright(props) {
     return (
@@ -32,25 +30,11 @@ function Copyright(props) {
   
   const theme = createTheme(); 
 
-  const deleteLoginToken=()=>{
-    sessionStorage.removeItem('user');
-  }
+export default function Register() {  
+const [errors,setErrors]=React.useState([])
+const navigate = useNavigate();
 
-export default function Login(props) {
-
-deleteLoginToken();
-
-
-  const [errors,setErrors]=React.useState([]);
-  const navigate = useNavigate();
-
-const createLoginToken=(incompleteCookie) =>{
-  const sessionCookie = incompleteCookie;
-  sessionCookie["Role"] = incompleteCookie["IsMod"]>0? "Mod" : "User";
-  return sessionCookie;  
-}
-
-  function handleValidation(formData) {
+function handleValidation(formData) {
     let formIsValid = true;
     let errors = {};
 
@@ -58,6 +42,18 @@ const createLoginToken=(incompleteCookie) =>{
     if(!formData.get('username').match(/^[a-zA-Z0-9]+$/)){
       formIsValid = false;
       errors["username"]="You have invalid charters in your username.";
+    }
+  
+
+    //email
+    if(typeof formData.get('email') !== "undefined"){
+      let lastAtPos = formData.get('email').lastIndexOf('@');
+      let lastDotPos = formData.get('email').lastIndexOf('.');
+
+      if (!(lastAtPos < lastDotPos && lastAtPos > 0 && formData.get('email').indexOf('@@') === -1 && lastDotPos > 2 && (formData.get('email').length - lastDotPos) > 2)) {
+        formIsValid = false;
+        errors["email"] = "Email is not valid";
+      }
     }
 
     //Password
@@ -67,28 +63,33 @@ const createLoginToken=(incompleteCookie) =>{
     return formIsValid;
   }
 
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
+
         if(handleValidation(data))
         {
-          
           let jsonData = {
             username: data.get('username'),
-            password: data.get('password')
+            email: data.get('email'),
+            password: data.get('password'),
+            keyword: "none"
            }
-
-
- getLogin(jsonData)
-.then(res => { console.log(res);
-  return res.status === 200 ? res.data : null})
-.then(value => {
-  sessionStorage.setItem('user',JSON.stringify(createLoginToken(value)));
-})
-.then(r=>{navigate('/Home');})
+          let res = postRegister(jsonData);
+          console.log(res);
+          if(res.data !==null){
+             //TODO create cookie and redirect
+             sessionStorage.setItem('user',JSON.stringify(jsonData));
+             
+             navigate('/Login');
+          }
+          else {
+            alert("Something went wrong with creating your account please try again later");
+          }
+          alert("form was submitted");
         }
-        else {alert("form has errors!"); }
+        else{ alert("form has errors!"); }
       };
 
     return (
@@ -123,10 +124,12 @@ const createLoginToken=(incompleteCookie) =>{
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Sign in
+                  Sign up
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                  <TextField
+                
+                
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                <TextField
                     margin="normal"
                     required
                     fullWidth
@@ -136,7 +139,18 @@ const createLoginToken=(incompleteCookie) =>{
                     id="username"
                   />
                   <span className="error">{errors["username"]}</span>
-
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                  />
+                  <span className="error">{errors["email"]}</span>
+                  
                   <TextField
                     margin="normal"
                     required
@@ -147,31 +161,17 @@ const createLoginToken=(incompleteCookie) =>{
                     id="password"
                     autoComplete="current-password"
                   />
-<span className="error">{errors["password"]}</span>
+                  <span className="error">{errors["password"]}</span>
 
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
                   <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Sign In
+                    Register
                   </Button>
                   <Grid container>
-                    <Grid item xs>
-                      <Link href="#" variant="body2">
-                        Forgot password?
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                      <Link href="/Register" variant="body2">
-                        {"Don't have an account? Sign Up"}
-                      </Link>
-                    </Grid>
                   </Grid>
                   <Copyright sx={{ mt: 5 }} />
                 </Box>

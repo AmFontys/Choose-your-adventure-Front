@@ -2,20 +2,21 @@ import React, {useState,useEffect} from 'react';
 import { Container } from '@mui/system';
 import { Paper } from '@mui/material';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+import {Link} from 'react-router-dom';
+import {getStories} from "../Services/storyService";
 
 export default function Story() {  
     const paperStyle ={padding:'50px 20px', width:600,margin:"20px auto"}
     const[stories,setStories]=useState([])
 
+
  
 useEffect(()=>{
- fetch("http://localhost:8080/api/story/")
- .then(res=>res.json())
- .then((result)=>{
-   setStories(result);
- }
-)
+  getStories()
+  .then(res=>{
+    setStories(res.data);
+  })
+
 },[])
   return (
     <Container>
@@ -24,12 +25,16 @@ useEffect(()=>{
     <Paper elevation={3} style={paperStyle}>
 
       {stories.map(story=>(
-        <Paper elevation={6} style={{margin:"10px",padding:"15px", textAlign:"left"}} key={story.id}>
+        <Paper elevation={6} style={{margin:"10px",padding:"15px", textAlign:"left"}} key={story.storyid}>
      
          Title:{story.title}<br/>
- <Button variant="contained" color="secondary">
-  <Link to={`/${story.id}`}>Go to</Link>
-</Button>
+         <Link to={{
+          pathname: `/ReadStory/${story.storyid}`}}
+          state={{ stories: story }}
+          key={story.storyid}>
+         <Button variant="contained" color="secondary">
+  Go to</Button>
+</Link>
         </Paper>
       ))
 }

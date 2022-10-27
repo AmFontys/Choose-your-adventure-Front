@@ -11,7 +11,9 @@ export default function UserStory() {
 
  
 useEffect(()=>{
- fetch(`http://localhost:8080/api/story/User/${cookie}`)
+ //TODO adding user specific function
+ 
+  fetch(`http://localhost:8080/api/story/User/${cookie}`)
  .then(res=>res.json())
  .then((result)=>{
    setStories(result);
