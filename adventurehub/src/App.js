@@ -26,7 +26,7 @@ function App() {
           <Route exact path='Search' element={<SearchStory />} />
           <Route element={<Index />} />
           <Route exact path='DashBoard' element={
-            <ProtectedRoute isAllowed={!!user}>
+            <ProtectedRoute isAllowed={true}>
               <Dashboard />
             </ProtectedRoute>
           }

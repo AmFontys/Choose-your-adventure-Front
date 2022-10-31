@@ -76,19 +76,17 @@ function handleValidation(formData) {
             password: data.get('password'),
             keyword: "none"
            }
-          let res = postRegister(jsonData);
-          console.log(res);
-          if(res.data !==null){
-             //TODO create cookie and redirect
-             sessionStorage.setItem('user',JSON.stringify(jsonData));
-             
-             navigate('/Login');
-          }
-          else {
-            alert("Something went wrong with creating your account please try again later");
-          }
-          alert("form was submitted");
-        }
+          postRegister(jsonData)
+          .then(res =>{
+            return res.status === 201 ? true : false;
+        })
+        .then(boolVal => {
+          boolVal ?
+          navigate('/Login')
+        :
+        alert("Something went wrong please try again later")
+      });
+    }      
         else{ alert("form has errors!"); }
       };
 
