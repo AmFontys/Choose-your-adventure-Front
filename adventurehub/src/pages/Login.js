@@ -45,6 +45,7 @@ deleteLoginToken();
   const navigate = useNavigate();
 
 const createLoginToken=(incompleteCookie) =>{
+  console.log(incompleteCookie);
   const sessionCookie = incompleteCookie;
   sessionCookie["Role"] = incompleteCookie["IsMod"]>0? "Mod" : "User";
   return sessionCookie;  
@@ -81,12 +82,16 @@ const createLoginToken=(incompleteCookie) =>{
 
 
  getLogin(jsonData)
-.then(res => { console.log(res);
+.then(res => { 
   return res.status === 200 ? res.data : null})
-.then(value => {
+.then(value => { 
+ if(value!==""){
   sessionStorage.setItem('user',JSON.stringify(createLoginToken(value)));
+  navigate('/Home');
+ }
+  else alert("Wrong password or username!");
 })
-.then(r=>{navigate('/Home');})
+
         }
         else {alert("form has errors!"); }
       };

@@ -6,11 +6,9 @@ export const getUsers = () => {
 }
 
 export const updateUser = async(json) => {
-    console.log(json);
-    return await httpCommons.patch("/user", json);
+    return await httpCommons.put("/user", json);
 }
 
 export const deleteUser = async(json) =>{
-    console.log(json);
-    return await httpCommons.delete("/user",json);
+    return await httpCommons.delete("/user",{data:json });
 }

@@ -1,22 +1,21 @@
 import * as React from 'react';
 import { updateUser } from '../Services/userService';
 import { deleteUser } from '../Services/userService';
-import useLocalStorage from './useLocalStorage';
 import {DataGrid, GridActionsCellItem, GridRowModes,} from '@mui/x-data-grid';
 import { Box } from '@mui/material';
 import { Cancel, Delete, Edit, Save } from '@mui/icons-material';
+import {useNavigate} from 'react-router-dom';
 
 const getRows=()=>{
-  const ses = JSON.parse(sessionStorage.getItem("user"));
-  const jdata = [{"userid":12,"username":"Apple","email":"apple@mail.com","password":"$2a$13$uiNH42QyFtq97pVQ7pKuLegDya1LK3ctTmRtIaQ0Giv4PZ7EKigVi","keyword":"none","ismod":false,"Role":"User"}];
-  console.log(jdata);
-  return (jdata);
+  const sesData = [JSON.parse(sessionStorage.getItem("user"))];
+  return (sesData);
   };
 
 
 export default function User() {  
   const [rows, setRows] = React.useState(getRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
+  const navigate = useNavigate();
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -37,9 +36,25 @@ export default function User() {
   };
 
     const handleDeleteClick = (id) => () => {
+      var confirmation= window.confirm("Are you sure you want to delete this user?");
+      if(confirmation){
       setRows(rows.filter((row) => row.userid !== id));
-      rows.map((row)=> row.userid === id ? deleteUser(row): null);
-      
+      rows.map((row)=> row.userid === id ? 
+      deleteUser(row)
+      .then(r=>{        
+        let x =JSON.parse(sessionStorage.getItem('user'));
+        if(x.username===row.username){
+        sessionStorage.removeItem('user');
+        navigate('/Home');
+        }
+      }
+        ).catch(r=>{ console.log(r);
+          alert("Something went wrong please try again")})
+      : null);
+        }
+        else{
+          alert("User not deleted");
+        }
     };
 
   const handleCancelClick = (id) => () => {
@@ -73,14 +88,6 @@ console.log(res);
       width: 180,
       editable: true,
     },
-    {
-      field: 'keyword',
-      headerName: 'Keyword',
-      type: 'string',
-      editable: false ,
-      hide:true
-    },
-    { headerName: "Mod", field: "ismod", editable: false,hide:true },
     {
       field: 'actions',
       type: 'actions',
@@ -153,6 +160,7 @@ console.log(res);
         
         experimentalFeatures={{ newEditingApi: true }}
       />
-    </Box>
+      </Box>
+    
   );
 }

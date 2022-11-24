@@ -16,6 +16,9 @@ function App() {
 
   const [user,setUser] = useLocalStorage("","user");
 
+  const isUserAllowed = (userRole,roleNeeded)=>{
+    return userRole===roleNeeded;
+  }
 
   return (
   <div className="App">    
@@ -26,7 +29,7 @@ function App() {
           <Route exact path='Search' element={<SearchStory />} />
           <Route element={<Index />} />
           <Route exact path='DashBoard' element={
-            <ProtectedRoute isAllowed={true}>
+            <ProtectedRoute isAllowed={isUserAllowed(user.Role,"User")}>
               <Dashboard />
             </ProtectedRoute>
           }

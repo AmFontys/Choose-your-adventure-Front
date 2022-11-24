@@ -7,13 +7,13 @@ import Link from '@mui/material/Link';
 export default function UserStory() {  
     const paperStyle ={padding:'50px 20px', width:600,margin:"20px auto"}
     const[stories,setStories]=useState([])
-    const cookie =1;
+    const cookie =sessionStorage.getItem('user');
 
  
 useEffect(()=>{
  //TODO adding user specific function
  
-  fetch(`http://localhost:8080/api/story/User/${cookie}`)
+  fetch(`http://localhost:8080/api/story/User/${cookie.userId}`)
  .then(res=>res.json())
  .then((result)=>{
    setStories(result);
