@@ -88,20 +88,13 @@ console.log(res);
   const columns = [
     { field: 'username', headerName: 'Name', width: 180, editable: true },
     { field: 'email', headerName: 'Email', type: 'string', editable: true,  width:200 },
-    {
-      field: 'password',
-      headerName: 'Password',
-      type: 'string',
-      width: 180,
-      editable: true,
-    },
-    {
-      field: 'keyword',
-      headerName: 'Keyword',
-      type: 'string',
-      editable: false ,
-      hide:true
-    },
+    // {
+    //   field: 'password',
+    //   headerName: 'Password',
+    //   type: 'string',
+    //   width: 180,
+    //   editable: true,
+    // },    
     { headerName: "Mod", field: "ismod",type: 'boolean', editable: true,hide:false },
     {
       field: 'actions',
