@@ -1,0 +1,6 @@
+build project:
+  image: AdventureHubDock
+  script:
+    - npm install
+    - npm test
+    - npm build
