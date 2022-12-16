@@ -1,0 +1,12 @@
+stages: 
+  - build
+
+
+build project:
+  stage: build
+  image: AdventureHubDock
+  script:
+    - cd /adventurehub
+    - npm install
+    - npm test
+    - npm build
