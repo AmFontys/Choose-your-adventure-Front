@@ -78,7 +78,7 @@ export default function AddStory() {
     const fdata = new FormData(e.currentTarget);
     const story = fdata.get('title');
 
-    
+
     if (handleValidation(fdata)) {
       let json = {
         title: story, user: person
@@ -105,7 +105,7 @@ export default function AddStory() {
     const btext = fdata.get('textbody');
 
     if (handleValidation(fdata)) {
-      let data = {story: {storyid: story},  type: { typename: type }, bodyTitle: title, text: btext }
+      let data = { story: { storyid: story }, type: { typename: type }, bodyTitle: title, text: btext }
       postStoryBody(data)
         .then(res => {
           if (res.data === "New Storybody added") {

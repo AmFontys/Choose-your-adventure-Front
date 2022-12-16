@@ -1,28 +1,28 @@
 import * as React from 'react';
 import { updateUser } from '../Services/userService';
 import { deleteUser } from '../Services/userService';
-import {DataGrid, GridActionsCellItem, GridRowModes,} from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridRowModes, } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
 import { Cancel, Delete, Edit, Save } from '@mui/icons-material';
 import { getUsers } from '../Services/userService';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const getRows=()=>{
-  let tempData=[];
+const getRows = () => {
+  let tempData = [];
   getUsers()
-   .then(res => {tempData=(res.data);})
-   return tempData
-  };
+    .then(res => { tempData = (res.data); })
+  return tempData
+};
 
-export default function Users() {  
-  const [data,setData] = React.useState(getRows);
+export default function Users() {
+  const [data, setData] = React.useState(getRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
   const navigate = useNavigate();
 
-  React.useEffect(()=>{
-   getUsers()
-   .then(res => {setData(res.data);})
-  },[])
+  React.useEffect(() => {
+    getUsers()
+      .then(res => { setData(res.data); })
+  }, [])
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
   };
@@ -41,24 +41,26 @@ export default function Users() {
 
   };
 
-    const handleDeleteClick = (id) => () => {
-      var confirmation= window.confirm("Are you sure you want to delete this user?");
-      if(confirmation){
-        setData(data.filter((row) => row.userid !== id));
-        console.log("confiremd");
-      data.map((row)=> row.reportid === id ? 
-      deleteUser(row)
-      .then(r=>{
-        console.log(r);        
-      }
-        ).catch(r=>{ console.log(r);
-          alert("Something went wrong please try again")})
-      : null);
-        }
-        else{
-          alert("User not deleted");
-        }
-    };
+  const handleDeleteClick = (id) => () => {
+    var confirmation = window.confirm("Are you sure you want to delete this user?");
+    if (confirmation) {
+      setData(data.filter((row) => row.userid !== id));
+      console.log("confiremd");
+      data.map((row) => row.reportid === id ?
+        deleteUser(row)
+          .then(r => {
+            console.log(r);
+          }
+          ).catch(r => {
+            console.log(r);
+            alert("Something went wrong please try again")
+          })
+        : null);
+    }
+    else {
+      alert("User not deleted");
+    }
+  };
 
   const handleCancelClick = (id) => () => {
     setRowModesModel({
@@ -76,14 +78,14 @@ export default function Users() {
     const updatedRow = { ...newRow, isNew: false };
     setData(data.map((row) => (row.userid === newRow.userid ? updatedRow : row)));
 
-   const res= updateUser(updatedRow)
-console.log(res);
+    const res = updateUser(updatedRow)
+    console.log(res);
     return updatedRow;
   };
 
   const columns = [
     { field: 'username', headerName: 'Name', width: 180, editable: true },
-    { field: 'email', headerName: 'Email', type: 'string', editable: true,  width:200 },
+    { field: 'email', headerName: 'Email', type: 'string', editable: true, width: 200 },
     // {
     //   field: 'password',
     //   headerName: 'Password',
@@ -91,7 +93,7 @@ console.log(res);
     //   width: 180,
     //   editable: true,
     // },    
-    { headerName: "Mod", field: "ismod",type: 'boolean', editable: true,hide:false },
+    { headerName: "Mod", field: "ismod", type: 'boolean', editable: true, hide: false },
     {
       field: 'actions',
       type: 'actions',
@@ -150,7 +152,7 @@ console.log(res);
         },
       }}
     >
-       <h1>Users Information</h1>
+      <h1>Users Information</h1>
       <DataGrid
         rows={data}
         columns={columns}
@@ -160,11 +162,11 @@ console.log(res);
         onRowEditStart={handleRowEditStart}
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
-        getRowId={(row) => row.userid}   
-        
+        getRowId={(row) => row.userid}
+
         experimentalFeatures={{ newEditingApi: true }}
       />
-      </Box>
-    
+    </Box>
+
   );
 }

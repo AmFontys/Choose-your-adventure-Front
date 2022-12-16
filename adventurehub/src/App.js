@@ -19,10 +19,10 @@ const ENDPOINT = "http://localhost:8080/ws";
 
 function App() {
 
-  const [user,setUser] = useLocalStorage("","user");
+  const [user, setUser] = useLocalStorage("", "user");
   const [stompClient, setStompClient] = useState();
   const [messagesReceived, setMessagesReceived] = useState([]);
-  
+
   useEffect(() => {
     // // use SockJS as the websocket client
     // const socket = SockJS(ENDPOINT);
@@ -40,36 +40,36 @@ function App() {
     // setStompClient(stompClient);
   }, []);
 
- // display the received data
+  // display the received data
   const onMessageReceived = (data) => {
     const message = JSON.parse(data.body);
     setMessagesReceived(messagesReceived => [...messagesReceived, message]);
   };
 
 
-  const isUserAllowed = (userRole,roleNeeded)=>{
-    return userRole===roleNeeded;
+  const isUserAllowed = (userRole, roleNeeded) => {
+    return userRole === roleNeeded;
   }
 
   return (
-  <div className="App">    
-        <Appbar />
-        <Routes>
-          <Route exact path='/' element={<Index />} />
-          <Route exact path='Home' element={<Index />} />
-          <Route exact path='Search' element={<SearchStory />} />
-          <Route element={<Index />} />
-          <Route exact path='DashBoard' element={
-            <ProtectedRoute isAllowed={isUserAllowed(user.Role,"User")}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-           />
-          <Route exact path='Login' element={<Login />} />
-          <Route exact path='Register' element={<Register />} />
-          <Route exact path="ReadStory/:id" element={<ReadStory />} />
-        </Routes>
-      </div>
+    <div className="App">
+      <Appbar />
+      <Routes>
+        <Route exact path='/' element={<Index />} />
+        <Route exact path='Home' element={<Index />} />
+        <Route exact path='Search' element={<SearchStory />} />
+        <Route element={<Index />} />
+        <Route exact path='DashBoard' element={
+          <ProtectedRoute isAllowed={isUserAllowed(user.Role, "User")}>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+        />
+        <Route exact path='Login' element={<Login />} />
+        <Route exact path='Register' element={<Register />} />
+        <Route exact path="ReadStory/:id" element={<ReadStory />} />
+      </Routes>
+    </div>
   );
 }
 

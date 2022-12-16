@@ -16,61 +16,61 @@ import Users from '../Components/Users';
 import Report from '../Components/Report';
 
 const drawers = ['New Story', 'Story', 'User information', 'Users', 'Report'];
-const drawersComponent = [<AddStory />,<UserStory />,<User />,<Users />,<Report/>]
-const drawersIcon = [<AddIcon />,<AutoStoriesIcon />,<PersonPinIcon />,<GroupIcon />,<FlagIcon />]
+const drawersComponent = [<AddStory />, <UserStory />, <User />, <Users />, <Report />]
+const drawersIcon = [<AddIcon />, <AutoStoriesIcon />, <PersonPinIcon />, <GroupIcon />, <FlagIcon />]
 
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box sx={{ p: 3 }}>
-            {drawersComponent[index]}
-          </Box>
-        )}
-      </div>
-    );
-  }
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          {drawersComponent[index]}
+        </Box>
+      )}
+    </div>
+  );
+}
 
 export default function Dashboard() {
-    const [value, setValue] = React.useState(0);
- 
+  const [value, setValue] = React.useState(0);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  return(   
+  return (
     <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-    <Tabs value={value} onChange={handleChange} aria-label="icon label tabs example" centered>
-        {drawers.map((text,index) => (
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="icon label tabs example" centered>
+          {drawers.map((text, index) => (
             <Tab icon={drawersIcon[index]} label={text} key={index} />
-        )
-        )}   
-  </Tabs>
-  </Box>
-  <TabPanel value={value} index={0}>
-  Item 0
-</TabPanel>
-<TabPanel value={value} index={1}>
-  Item 1
-</TabPanel>
-<TabPanel value={value} index={2}>
-  Item 2
-</TabPanel>
-<TabPanel value={value} index={3}>
-  Item 3
-</TabPanel>
-<TabPanel value={value} index={4}>
-  Item 4
-</TabPanel>
-</Box>
+          )
+          )}
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        Item 0
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item 1
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item 2
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        Item 3
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        Item 4
+      </TabPanel>
+    </Box>
   );
 }
 
