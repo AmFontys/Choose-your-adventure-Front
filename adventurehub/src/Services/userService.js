@@ -2,7 +2,8 @@ import httpCommons from "../http-commons";
 
 
 export const getUsers = () => {
-    return httpCommons.get("/user");
+    let token = JSON.parse(sessionStorage.getItem('user')).accesToken;    
+    return httpCommons.get("/user",{headers: { Authorization: `Bearer ${token}` } });
 }
 
 export const updateUser = async(json) => {

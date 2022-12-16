@@ -2,26 +2,18 @@ import httpCommons from "../http-commons";
 
 
 export const getStoryBodyType = () => {
-    let token = sessionStorage.getItem("user");
-    let indexA = token.indexOf(`"accesToken":`,0)+13;
-    let IndexB = token.indexOf(`","Role"`,0);
-     let substringEnd = token.substring(indexA,IndexB);
-    let concat = (substringEnd).replace(/"/g,``);
-    return httpCommons.get("/story/body/type",{ headers: { Authorization: `Bearer ${concat}` } });
+    let token = JSON.parse(sessionStorage.getItem('user')).accesToken;    
+   
+    return httpCommons.get("/story/body/type",{ headers: { Authorization: `Bearer ${token}` } });
 }
 
 export const getStoryBody =(json) =>{
-    return httpCommons.get("/story/body",{params: json})
+    return httpCommons.get("/story/body/"+json)
 }
 
 export const postStoryBody = async(data) => {
-    console.log(data);
-    let token = sessionStorage.getItem("user");
-    let indexA = token.indexOf(`"accesToken":`,0)+13;
-    let IndexB = token.indexOf(`","Role"`,0);
-     let substringEnd = token.substring(indexA,IndexB);
-    let concat = (substringEnd).replace(/"/g,``);
-    return await httpCommons.post(`/story/body/9`,data,{ headers: { Authorization: `Bearer ${concat}` } });
+    let token = JSON.parse(sessionStorage.getItem('user')).accesToken;    
+    return await httpCommons.post(`/story/body/`+data.story.storyid,data,{ headers: { Authorization: `Bearer ${token}` } });
     
 }
 

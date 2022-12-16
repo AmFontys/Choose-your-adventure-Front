@@ -45,15 +45,11 @@ export default function Users() {
       var confirmation= window.confirm("Are you sure you want to delete this user?");
       if(confirmation){
         setData(data.filter((row) => row.userid !== id));
-      data.map((row)=> row.userid === id ? 
+        console.log("confiremd");
+      data.map((row)=> row.reportid === id ? 
       deleteUser(row)
       .then(r=>{
-        console.log(r);
-        let x =JSON.parse(sessionStorage.getItem('user'));
-        if(x.username===row.username){
-        sessionStorage.removeItem('user');
-        navigate('/Home');
-        }
+        console.log(r);        
       }
         ).catch(r=>{ console.log(r);
           alert("Something went wrong please try again")})
