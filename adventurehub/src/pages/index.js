@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Container } from '@mui/system';
-import Story from '../Components/story';
+import Story from '../Components/story/story';
 
 export default function Index() {
 

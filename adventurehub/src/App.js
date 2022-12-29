@@ -11,41 +11,17 @@ import ProtectedRoute from './Components/protectedRoute';
 import React from 'react';
 import useLocalStorage from './Components/useLocalStorage';
 import { useEffect, useState } from 'react';
-// import SockJS from 'sockjs-client';
-// import Stomp from 'stompjs';
-// Set the backend location
-const ENDPOINT = "http://localhost:8080/ws";
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import { v4 as uuidv4 } from 'uuid';
+import MsgChat from './Components/websocket/msgChat';
+import MsgSend from './Components/websocket/msgSend';
+import MsgUser from './Components/websocket/msgUser';
 
 
 function App() {
 
   const [user, setUser] = useLocalStorage("", "user");
-  const [stompClient, setStompClient] = useState();
-  const [messagesReceived, setMessagesReceived] = useState([]);
-
-  useEffect(() => {
-    // // use SockJS as the websocket client
-    // const socket = SockJS(ENDPOINT);
-    // // Set stomp to use websockets
-    // const stompClient = Stomp.over(socket);
-    // // connect to the backend
-    // stompClient.connect({}, () => {
-    //   // subscribe to the backend
-    //   stompClient.subscribe('/topic/publicmessages', (data) => {
-    //     console.log(data);
-    //     onMessageReceived(data);
-    //   });
-    // });
-    // // maintain the client for sending and receiving
-    // setStompClient(stompClient);
-  }, []);
-
-  // display the received data
-  const onMessageReceived = (data) => {
-    const message = JSON.parse(data.body);
-    setMessagesReceived(messagesReceived => [...messagesReceived, message]);
-  };
-
 
   const isUserAllowed = (userRole, roleNeeded) => {
     return userRole === roleNeeded;
@@ -69,6 +45,7 @@ function App() {
         <Route exact path='Register' element={<Register />} />
         <Route exact path="ReadStory/:id" element={<ReadStory />} />
       </Routes>
+
     </div>
   );
 }

@@ -17,3 +17,6 @@ export const postStoryBody = async (data) => {
 
 }
 
+export const postIncrementOption = async (id) => {
+    return await httpCommons.post(`/story/body/Inc/` + id);
+}

@@ -3,7 +3,7 @@ import { Container } from '@mui/system';
 import { Paper } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import { getStories } from "../Services/storyService";
+import { getStories } from "../../Services/storyService";
 
 export default function Story() {
   const paperStyle = { padding: '50px 20px', width: 600, margin: "20px auto" }

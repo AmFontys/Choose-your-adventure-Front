@@ -8,16 +8,18 @@ import AddIcon from '@mui/icons-material/Add';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import GroupIcon from '@mui/icons-material/Group';
 import FlagIcon from '@mui/icons-material/Flag';
+import AnnouncementIcon from '@mui/icons-material/Announcement';
 
-import AddStory from "../Components/AddStory";
-import UserStory from '../Components/UserStory';
+import AddStory from "../Components/story/AddStory";
+import UserStory from '../Components/story/UserStory';
 import User from '../Components/User';
 import Users from '../Components/Users';
 import Report from '../Components/Report';
+import ChatRoom from '../Components/ChatRoom';
 
-const drawers = ['New Story', 'Story', 'User information', 'Users', 'Report'];
-const drawersComponent = [<AddStory />, <UserStory />, <User />, <Users />, <Report />]
-const drawersIcon = [<AddIcon />, <AutoStoriesIcon />, <PersonPinIcon />, <GroupIcon />, <FlagIcon />]
+const drawers = ['New Story', 'Story', 'User information', 'Users', 'Report', 'Chat room'];
+const drawersComponent = [<AddStory />, <UserStory />, <User />, <Users />, <Report />, <ChatRoom />]
+const drawersIcon = [<AddIcon />, <AutoStoriesIcon />, <PersonPinIcon />, <GroupIcon />, <FlagIcon />, <AnnouncementIcon />]
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -69,6 +71,9 @@ export default function Dashboard() {
       </TabPanel>
       <TabPanel value={value} index={4}>
         Item 4
+      </TabPanel>
+      <TabPanel value={value} index={5}>
+        Item 5
       </TabPanel>
     </Box>
   );

@@ -3,7 +3,7 @@ import { Container } from '@mui/system';
 import { Paper } from '@mui/material';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
-import { deleteStory, getUserStories } from '../Services/storyService';
+import { deleteStory, getUserStories } from '../../Services/storyService';
 
 export default function UserStory() {
   const paperStyle = { padding: '50px 20px', width: 600, margin: "20px auto" }
