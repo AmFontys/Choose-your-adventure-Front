@@ -8,7 +8,7 @@ export default function Index() {
     <Container>
 
       <h1>Index Stories</h1>
-      <Story />
+      <Story loadStories={"all"}/>
 
     </Container>
   );

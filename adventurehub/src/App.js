@@ -23,8 +23,12 @@ function App() {
 
   const [user, setUser] = useLocalStorage("", "user");
 
-  const isUserAllowed = (userRole, roleNeeded) => {
-    return userRole === roleNeeded;
+
+
+  const isUserAllowed = (userRole, roleNeeded, secondAllowedRole) => {
+    if( userRole === roleNeeded || userRole===secondAllowedRole)
+      return true;
+    return false;
   }
 
   return (
@@ -36,7 +40,7 @@ function App() {
         <Route exact path='Search' element={<SearchStory />} />
         <Route element={<Index />} />
         <Route exact path='DashBoard' element={
-          <ProtectedRoute isAllowed={isUserAllowed(user.Role, "User")}>
+          <ProtectedRoute isAllowed={isUserAllowed(user.Role, "User","Mod")}>
             <Dashboard />
           </ProtectedRoute>
         }

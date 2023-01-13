@@ -25,3 +25,9 @@ export const deleteStory = async (id) => {
     return await httpCommons.delete("/story/" + id);
 }
 
+export const searchStoryByName= async (name) =>{
+    return await httpCommons.get("/story/search",{params: {title: name}}) ;
+ }
+export const searchStoryByUser= async (usernameData) =>{
+    return await httpCommons.get("/story/searchUser",{params: {username: usernameData}}); 
+ }
