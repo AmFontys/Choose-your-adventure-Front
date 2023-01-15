@@ -26,7 +26,7 @@ function App() {
 
 
   const isUserAllowed = (userRole, roleNeeded, secondAllowedRole) => {
-    if( userRole === roleNeeded || userRole===secondAllowedRole)
+    if (userRole === roleNeeded || userRole === secondAllowedRole)
       return true;
     return false;
   }
@@ -40,7 +40,7 @@ function App() {
         <Route exact path='Search' element={<SearchStory />} />
         <Route element={<Index />} />
         <Route exact path='DashBoard' element={
-          <ProtectedRoute isAllowed={isUserAllowed(user.Role, "User","Mod")}>
+          <ProtectedRoute isAllowed={isUserAllowed(user.Role, "User", "Mod")}>
             <Dashboard />
           </ProtectedRoute>
         }
